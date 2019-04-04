@@ -28,6 +28,12 @@ class RepositoriesController < ApplicationController
     render json: repository
   end
 
+  def destroy
+    repository = Repository.find(params[:id])
+    repository.destroy
+    render nothing: true, status: :no_content
+  end
+
   rescue_from ActiveRecord::RecordNotFound do |e|
     render json: { message: e.message }, status: :not_found
   end

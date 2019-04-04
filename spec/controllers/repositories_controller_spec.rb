@@ -180,4 +180,96 @@ describe RepositoriesController do
     end
   end
 
+  describe "DELETE destroy" do
+    it "returns http status no content" do
+      user = User.create(
+        username: "diegotc86",
+        name: "Diego Torres",
+        birthday: "07/06/1986",
+        email: "diegot86@gmail.com",
+        bio: "Diego's bio here",
+        company: "Diego's company",
+        location: "LIMA - PERU",
+        website: "www.diegotorres.dev"
+      )
+      repository = Repository.create(
+        name: 'repo1', 
+        description: 'Description of repo1', 
+        access: "public", 
+        license: "none", 
+        user_id: user.id,
+      )
+      delete :destroy, params: { id: repository }
+      expect(response).to have_http_status(:no_content)
+    end
+
+    it "returns empty body" do
+      user = User.create(
+        username: "diegotc86",
+        name: "Diego Torres",
+        birthday: "07/06/1986",
+        email: "diegot86@gmail.com",
+        bio: "Diego's bio here",
+        company: "Diego's company",
+        location: "LIMA - PERU",
+        website: "www.diegotorres.dev"
+      )
+      repository = Repository.create(
+        name: 'repo1', 
+        description: 'Description of repo1', 
+        access: "public", 
+        license: "none", 
+        user_id: user.id,
+      )
+      delete :destroy, params: { id: repository }
+      expect(response.body).to eq(" ")
+    end
+
+    it "decrement by 1 the total of repositories" do
+      user = User.create(
+        username: "diegotc86",
+        name: "Diego Torres",
+        birthday: "07/06/1986",
+        email: "diegot86@gmail.com",
+        bio: "Diego's bio here",
+        company: "Diego's company",
+        location: "LIMA - PERU",
+        website: "www.diegotorres.dev"
+      )
+      repository = Repository.create(
+        name: 'repo1', 
+        description: 'Description of repo1', 
+        access: "public", 
+        license: "none", 
+        user_id: user.id,
+      )
+      expect do
+        delete :destroy, params: { id: repository }
+      end.to change { Repository.count }.by(-1)
+    end
+
+    it "actually delete the repository" do
+      user = User.create(
+        username: "diegotc86",
+        name: "Diego Torres",
+        birthday: "07/06/1986",
+        email: "diegot86@gmail.com",
+        bio: "Diego's bio here",
+        company: "Diego's company",
+        location: "LIMA - PERU",
+        website: "www.diegotorres.dev"
+      )
+      repository = Repository.create(
+        name: 'repo1', 
+        description: 'Description of repo1', 
+        access: "public", 
+        license: "none", 
+        user_id: user.id,
+      )
+      delete :destroy, params: { id: repository }
+      deleted_repository = Repository.where(id: repository.id)
+      expect(deleted_repository.size).to eq(0)
+    end
+  end
+
 end

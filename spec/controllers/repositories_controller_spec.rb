@@ -132,4 +132,52 @@ describe RepositoriesController do
     end
   end
 
+  describe "PATCH update" do
+    it "returns http status ok" do
+      user = User.create(
+        username: "diegotc86",
+        name: "Diego Torres",
+        birthday: "07/06/1986",
+        email: "diegot86@gmail.com",
+        bio: "Diego's bio here",
+        company: "Diego's company",
+        location: "LIMA - PERU",
+        website: "www.diegotorres.dev"
+      )
+      repository = Repository.create(
+      name: 'repo1', 
+      description: 'Description of repo1', 
+      access: "public", 
+      license: "none", 
+      user_id: user.id,
+      )
+      patch :update, params: { id: repository, attributes: {name: "repo1 updated", access: "private"}}
+      expect(response).to have_http_status(:ok)
+    end
+
+    it "returns the updated product" do
+      user = User.create(
+        username: "diegotc86",
+        name: "Diego Torres",
+        birthday: "07/06/1986",
+        email: "diegot86@gmail.com",
+        bio: "Diego's bio here",
+        company: "Diego's company",
+        location: "LIMA - PERU",
+        website: "www.diegotorres.dev"
+      )
+      repository = Repository.create(
+        name: 'repo1', 
+        description: 'Description of repo1', 
+        access: "public", 
+        license: "none", 
+        user_id: user.id,
+      )
+      patch :update, params: { id: repository, attributes: {name: "repo1 updated", access: "private"}}
+      expected_repository = JSON.parse(response.body)
+      expect(expected_repository["name"]).to eq("repo1 updated")
+      expect(expected_repository["access"]).to eq("private")
+    end
+  end
+
 end

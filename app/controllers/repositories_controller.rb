@@ -19,6 +19,15 @@ class RepositoriesController < ApplicationController
     render json: repository, status: :created
   end
 
+  def update
+    repository = Repository.find(params[:id])
+    params[:attributes].keys.each do |key|
+      repository[key] = params[:attributes][key]
+    end
+    repository.save
+    render json: repository
+  end
+
   rescue_from ActiveRecord::RecordNotFound do |e|
     render json: { message: e.message }, status: :not_found
   end

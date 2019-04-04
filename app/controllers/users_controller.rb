@@ -8,7 +8,10 @@ class UsersController < ApplicationController
     render json: User.find(params[:id])
   end
 
-
+  def create
+    user = User.create(name: params[:name])
+    render json: user, status: :created
+  end
 
 
   def update
@@ -26,5 +29,14 @@ class UsersController < ApplicationController
     render json: { message: e.message }, status: :not_found
   end
 
+  def destroy
+    user = User.find(params[:id])
+    user.destroy
+    render nothing: true, status: :no_content
+  end
+  
+  rescue_from ActiveRecord::RecordNotFound do |e|
+    render json: { message: e.message }, status: :not_found
+  end
 
 end

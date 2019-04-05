@@ -1,6 +1,6 @@
 require 'rails_helper'
-#  Tests
-describe UsersController do
+ 
+describe UserController do
   before do
     User.delete_all
   end

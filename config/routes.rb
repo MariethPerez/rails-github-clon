@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
-  resources :users
+  resources :users do
+    resources :repositories, only: :index
+  end
   resources :repositories
   resources :branches
 end

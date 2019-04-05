@@ -6,7 +6,7 @@ class RepositoriesController < ApplicationController
 
   def show
     render json: Repository.find(params[:id])
-    end
+  end
 
   def create
     repository = Repository.create(

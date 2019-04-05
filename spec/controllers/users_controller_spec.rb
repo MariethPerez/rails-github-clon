@@ -1,6 +1,8 @@
 require 'rails_helper'
+
  #data update
 describe UsersController do
+
   before do
     User.delete_all
   end
@@ -128,6 +130,4 @@ describe UsersController do
   
 end
 
-  
 
-  

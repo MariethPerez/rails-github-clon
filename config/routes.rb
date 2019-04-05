@@ -6,4 +6,6 @@ Rails.application.routes.draw do
   end
   resources :repositories
   resources :branches
+  resources :pull_requests
+  resources :issues
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_04_04_204015) do
+ActiveRecord::Schema.define(version: 2019_04_05_191017) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -23,6 +23,32 @@ ActiveRecord::Schema.define(version: 2019_04_04_204015) do
     t.datetime "updated_at", null: false
     t.index ["repository_id"], name: "index_branches_on_repository_id"
     t.index ["user_id"], name: "index_branches_on_user_id"
+  end
+
+  create_table "issues", force: :cascade do |t|
+    t.string "title"
+    t.text "description"
+    t.string "label"
+    t.bigint "user_create_id"
+    t.bigint "user_assign_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "repository_id"
+    t.index ["repository_id"], name: "index_issues_on_repository_id"
+    t.index ["user_assign_id"], name: "index_issues_on_user_assign_id"
+    t.index ["user_create_id"], name: "index_issues_on_user_create_id"
+  end
+
+  create_table "pull_requests", force: :cascade do |t|
+    t.string "title"
+    t.string "status"
+    t.text "description"
+    t.bigint "branch_in_id"
+    t.bigint "branch_out_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["branch_in_id"], name: "index_pull_requests_on_branch_in_id"
+    t.index ["branch_out_id"], name: "index_pull_requests_on_branch_out_id"
   end
 
   create_table "repositories", force: :cascade do |t|
@@ -51,5 +77,6 @@ ActiveRecord::Schema.define(version: 2019_04_04_204015) do
 
   add_foreign_key "branches", "repositories"
   add_foreign_key "branches", "users"
+  add_foreign_key "issues", "repositories"
   add_foreign_key "repositories", "users"
 end

@@ -1,9 +1,9 @@
 require 'rails_helper'
 
 describe BranchesController do
-    #   before do
-    #     Product.delete_all
-    #   end
+      before do
+        Branch.delete_all
+      end
    
     describe 'GET index' do
         it 'returns http status ok' do

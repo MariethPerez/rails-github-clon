@@ -9,7 +9,13 @@ class PullRequestsController < ApplicationController
   end
 
   def create
-    pull_request = PullRequest.create(title: params[:title],description: params[:description],label: params[:label],user_id: params[:user_id])
+    pull_request = PullRequest.create(
+      title: params[:title],
+      description: params[:description],
+      status: params[:status],
+      branch_in_id: params[:branch_in],
+      branch_out_id: params[:branch_out]
+      )
     render json: pull_request, status: :created
   end
 

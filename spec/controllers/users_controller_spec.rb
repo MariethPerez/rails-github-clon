@@ -1,6 +1,6 @@
 require 'rails_helper'
  
-describe UsersController do
+describe UserController do
   before do
     User.delete_all
   end
@@ -128,6 +128,4 @@ describe UsersController do
   
 end
 
-  
 
-  

@@ -1,5 +1,5 @@
 require 'rails_helper'
- 
+#  Tests
 describe UsersController do
   before do
     User.delete_all

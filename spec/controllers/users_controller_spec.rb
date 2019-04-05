@@ -1,6 +1,8 @@
 require 'rails_helper'
- 
-describe UserController do
+
+ #data update
+describe UsersController do
+
   before do
     User.delete_all
   end
@@ -84,14 +86,14 @@ describe UserController do
 
   describe "PATCH update" do
     it "returns http status ok" do
-      user = User.create(name: 'Apple')
-      patch :update, params: { name: "Orange", id: user.id, category: "Hola" }
+      user = User.create(name: 'Cristian')
+      patch :update, params: { name: 'Cristian', id: user.id, category: 'Hello' }
       expect(response).to have_http_status(:ok)
     end
 
     it "returns the updated user" do
-      user = User.create(name: 'Apple')
-      patch :update, params: { name: "Orange", id: user.id, username: "Hola" }
+      user = User.create(name: 'Ronnie')
+      patch :update, params: { name: 'Ronnie', id: user.id, username: 'Ron' }
       expected_user = JSON.parse(response.body)
       expect(expected_user["name"]).to eq("Orange")
       expect(expected_user["username"]).to eq("Hola")
@@ -100,26 +102,26 @@ describe UserController do
 
   describe "DELETE destroy" do
     it "returns http status no content" do
-      user = User.create(name: 'Apple')
+      user = User.create(name: 'Violet')
       delete :destroy, params: { id: user }
       expect(response).to have_http_status(:no_content)
     end
 
     it "returns empty body" do
-      user = User.create(name: 'Apple')
+      user = User.create(name: 'Cleare')
       delete :destroy, params: { id: user }
       expect(response.body).to eq(" ")
     end
 
     it "decrement by 1 the total of users" do
-      user = User.create(name: 'Apple')
+      user = User.create(name: 'Camie')
       expect do
         delete :destroy, params: { id: user }
       end.to change { User.count }.by(-1)
     end
 
     it "actually delete the user" do
-      user = User.create(name: 'Apple')
+      user = User.create(name: 'Akemi')
       delete :destroy, params: { id: user }
       user = User.where(id: user.id)
       expect(user.size).to eq(0)

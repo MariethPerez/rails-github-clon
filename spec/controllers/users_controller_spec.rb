@@ -93,8 +93,8 @@ describe UsersController do
       user = User.create(name: 'Ronnie')
       patch :update, params: { name: 'Ronnie', id: user.id, username: 'Ron' }
       expected_user = JSON.parse(response.body)
-      expect(expected_user["name"]).to eq("Orange")
-      expect(expected_user["username"]).to eq("Hola")
+      expect(expected_user["name"]).to eq("Ronnie")
+      expect(expected_user["username"]).to eq("Ron")
     end
   end
 

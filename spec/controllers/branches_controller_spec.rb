@@ -1,10 +1,6 @@
 require 'rails_helper'
 
 describe BranchesController do
-      before do
-        Branch.delete_all
-      end
-   
     describe 'GET index' do
         it 'returns http status ok' do
           get :index
@@ -144,7 +140,6 @@ describe BranchesController do
             user_id: user.id
           )
           post :create, params: { name: "Rama_Feature1",user_id: user.id , repository_id: repository.id }
-          puts response.body
           expected_branch = JSON.parse(response.body)
           expect(expected_branch).to have_key("id")
           expect(expected_branch["name"]).to eq("Rama_Feature1")

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_04_05_170459) do
+ActiveRecord::Schema.define(version: 2019_04_05_191017) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -33,6 +33,8 @@ ActiveRecord::Schema.define(version: 2019_04_05_170459) do
     t.bigint "user_assign_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "repository_id"
+    t.index ["repository_id"], name: "index_issues_on_repository_id"
     t.index ["user_assign_id"], name: "index_issues_on_user_assign_id"
     t.index ["user_create_id"], name: "index_issues_on_user_create_id"
   end
@@ -75,5 +77,9 @@ ActiveRecord::Schema.define(version: 2019_04_05_170459) do
 
   add_foreign_key "branches", "repositories"
   add_foreign_key "branches", "users"
+<<<<<<< HEAD
+=======
+  add_foreign_key "issues", "repositories"
+>>>>>>> 18389c07cca7417bd0ef7809cb2756f4aad78681
   add_foreign_key "repositories", "users"
 end

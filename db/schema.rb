@@ -77,9 +77,6 @@ ActiveRecord::Schema.define(version: 2019_04_05_191017) do
 
   add_foreign_key "branches", "repositories"
   add_foreign_key "branches", "users"
-<<<<<<< HEAD
-=======
   add_foreign_key "issues", "repositories"
->>>>>>> 18389c07cca7417bd0ef7809cb2756f4aad78681
   add_foreign_key "repositories", "users"
 end

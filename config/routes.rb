@@ -5,7 +5,9 @@ Rails.application.routes.draw do
     end
     resources :issues, only: :index
   end
-  resources :repositories
+  resources :repositories do
+    resources :issues, only: :index
+  end
   resources :branches
   resources :pull_requests
   resources :issues

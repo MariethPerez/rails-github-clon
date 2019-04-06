@@ -3,6 +3,7 @@ Rails.application.routes.draw do
     resources :repositories, only: :index do
       resources :branches, only: :index
     end
+    resources :issues, only: :index
   end
   resources :repositories
   resources :branches

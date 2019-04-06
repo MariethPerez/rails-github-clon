@@ -1,12 +1,15 @@
 class RepositoriesController < ApplicationController
-
   def index
-    render json: Repository.all
+    if params["user_id"]
+      render json: Repository.where(user_id: params["user_id"])
+    else
+      render json: Repository.all
+    end
   end
 
   def show
     render json: Repository.find(params[:id])
-    end
+  end
 
   def create
     repository = Repository.create(

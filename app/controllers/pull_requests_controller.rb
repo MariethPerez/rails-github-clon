@@ -21,9 +21,9 @@ class PullRequestsController < ApplicationController
 
   def update
     pull_request = PullRequest.find(params[:id])
-    params.keys.each do |key|
+    params[:attributes].keys.each do |key|
       if key != :id && pull_request.attributes.key?(key)
-        pull_request[key] = params[key]
+        pull_request[key] = params[:attributes][key]
       end
     end
     pull_request.save

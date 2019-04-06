@@ -123,8 +123,8 @@ describe PullRequestsController do
         branch_out: branch_1
       )
       get :show, params: { id: pull_request }
-      expected_repository = JSON.parse(response.body)
-      expect(expected_repository["id"]).to eq(pull_request.id)
+      expected_pull_request = JSON.parse(response.body)
+      expect(expected_pull_request["id"]).to eq(pull_request.id)
     end
     it 'returns http status not found' do
       get :show, params: { id: 'xxx' }
@@ -206,9 +206,9 @@ describe PullRequestsController do
         branch_in: branch_master.id,
         branch_out: branch_1.id
       }
-      expected_repository = JSON.parse(response.body)
-      expect(expected_repository).to have_key("id")
-      expect(expected_repository["title"]).to eq("Resolve #1")
+      expected_pull_request = JSON.parse(response.body)
+      expect(expected_pull_request).to have_key("id")
+      expect(expected_pull_request["title"]).to eq("Resolve #1")
     end
   end
 
@@ -456,8 +456,8 @@ describe PullRequestsController do
         branch_out: branch_1
       )
       delete :destroy, params: { id: pull_request }
-      deleted_pull = PullRequest.where(id: pull_request.id)
-      expect(deleted_pull.size).to eq(0)
+      deleted_pull_request = PullRequest.where(id: pull_request.id)
+      expect(deleted_pull_request.size).to eq(0)
     end
   end
 

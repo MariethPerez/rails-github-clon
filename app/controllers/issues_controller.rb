@@ -1,6 +1,12 @@
 class IssuesController < ApplicationController
     def index
-        render json: Issue.all
+        if params["user_id"]
+          render json: Issue.where(user_create_id: params["user_id"]).or(Issue.where(user_assign_id: params["user_id"]))
+        elsif params["repository_id"]
+          render json: Issue.where(repository_id: params["repository_id"])
+        else
+          render json: Issue.all
+        end
     end
 
     def show

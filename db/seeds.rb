@@ -3,6 +3,7 @@ Faker::Config.locale = 'es'
 
 user_id = 1
 repository_id = 1
+branch_id = 1
 
 #Create 50 users
 50.times do
@@ -41,6 +42,7 @@ repository_id = 1
         repository_id: repository_id
       }
       Branch.create(branch)
+      branch_id += 1
     end
     repository_id += 1
   end
@@ -60,4 +62,18 @@ issue_id = 1
   }
   Issue.create(issue)
   issue_id += 1
+end
+
+# Creates 1000 random pull requests
+pull_request_id = 1
+1000.times do
+  pull_request ={
+    title: "Tittle of Pull Request #{pull_request_id}",
+    status: ["true", "false"].sample,
+    description: "Description of Issue #{pull_request_id}",
+    branch_in_id: rand(1..(branch_id-1)),
+    branch_out_id: rand(1..(branch_id-1)),
+  }
+  PullRequest.create(pull_request)
+  pull_request_id += 1
 end

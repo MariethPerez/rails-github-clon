@@ -304,4 +304,161 @@ describe PullRequestsController do
     end
   end
 
+  describe "DELETE destroy" do
+    it "returns http status no content" do
+      user = User.create(
+        username: "diegotc86",
+        name: "Diego Torres",
+        birthday: "07/06/1986",
+        email: "diegot86@gmail.com",
+        bio: "Diego's bio here",
+        company: "Diego's company",
+        location: "LIMA - PERU",
+        website: "www.diegotorres.dev"
+      )
+      repository = Repository.create(
+        name: 'repo1', 
+        description: 'Description of repo1', 
+        access: "public", 
+        license: "none", 
+        user_id: user.id,
+      )
+      branch_master = Branch.create(
+        name: 'master',
+        repository_id: repository.id,
+        user_id: user.id
+      )
+      branch_1 = Branch.create(
+        name: '1',
+        user_id: user.id,
+        repository_id: repository.id
+      )
+      pull_request = PullRequest.create(
+        title: 'Resolve #1',
+        status: true,
+        description: 'Resolve #1',
+        branch_in: branch_master,
+        branch_out: branch_1
+      )
+      delete :destroy, params: { id: pull_request }
+      expect(response).to have_http_status(:no_content)
+    end
+    it "returns empty body" do
+      user = User.create(
+        username: "diegotc86",
+        name: "Diego Torres",
+        birthday: "07/06/1986",
+        email: "diegot86@gmail.com",
+        bio: "Diego's bio here",
+        company: "Diego's company",
+        location: "LIMA - PERU",
+        website: "www.diegotorres.dev"
+      )
+      repository = Repository.create(
+        name: 'repo1', 
+        description: 'Description of repo1', 
+        access: "public", 
+        license: "none", 
+        user_id: user.id,
+      )
+      branch_master = Branch.create(
+        name: 'master',
+        repository_id: repository.id,
+        user_id: user.id
+      )
+      branch_1 = Branch.create(
+        name: '1',
+        user_id: user.id,
+        repository_id: repository.id
+      )
+      pull_request = PullRequest.create(
+        title: 'Resolve #1',
+        status: true,
+        description: 'Resolve #1',
+        branch_in: branch_master,
+        branch_out: branch_1
+      )
+      delete :destroy, params: { id: pull_request }
+      expect(response.body).to eq(" ")
+    end
+    it "decrement by 1 the total of repositories" do
+      user = User.create(
+        username: "diegotc86",
+        name: "Diego Torres",
+        birthday: "07/06/1986",
+        email: "diegot86@gmail.com",
+        bio: "Diego's bio here",
+        company: "Diego's company",
+        location: "LIMA - PERU",
+        website: "www.diegotorres.dev"
+      )
+      repository = Repository.create(
+        name: 'repo1', 
+        description: 'Description of repo1', 
+        access: "public", 
+        license: "none", 
+        user_id: user.id,
+      )
+      branch_master = Branch.create(
+        name: 'master',
+        repository_id: repository.id,
+        user_id: user.id
+      )
+      branch_1 = Branch.create(
+        name: '1',
+        user_id: user.id,
+        repository_id: repository.id
+      )
+      pull_request = PullRequest.create(
+        title: 'Resolve #1',
+        status: true,
+        description: 'Resolve #1',
+        branch_in: branch_master,
+        branch_out: branch_1
+      )
+      expect do
+        delete :destroy, params: { id: pull_request }
+      end.to change { PullRequest.count }.by(-1)
+    end
+    it "actually delete the repository" do
+      user = User.create(
+        username: "diegotc86",
+        name: "Diego Torres",
+        birthday: "07/06/1986",
+        email: "diegot86@gmail.com",
+        bio: "Diego's bio here",
+        company: "Diego's company",
+        location: "LIMA - PERU",
+        website: "www.diegotorres.dev"
+      )
+      repository = Repository.create(
+        name: 'repo1', 
+        description: 'Description of repo1', 
+        access: "public", 
+        license: "none", 
+        user_id: user.id,
+      )
+      branch_master = Branch.create(
+        name: 'master',
+        repository_id: repository.id,
+        user_id: user.id
+      )
+      branch_1 = Branch.create(
+        name: '1',
+        user_id: user.id,
+        repository_id: repository.id
+      )
+      pull_request = PullRequest.create(
+        title: 'Resolve #1',
+        status: true,
+        description: 'Resolve #1',
+        branch_in: branch_master,
+        branch_out: branch_1
+      )
+      delete :destroy, params: { id: pull_request }
+      deleted_pull = PullRequest.where(id: pull_request.id)
+      expect(deleted_pull.size).to eq(0)
+    end
+  end
+
 end

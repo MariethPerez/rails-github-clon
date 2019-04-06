@@ -8,7 +8,9 @@ Rails.application.routes.draw do
   resources :repositories do
     resources :issues, only: :index
   end
-  resources :branches
+  resources :branches do
+    resources :pull_requests, only: :index
+  end
   resources :pull_requests
   resources :issues
 end

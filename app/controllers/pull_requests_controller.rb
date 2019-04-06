@@ -1,7 +1,11 @@
 class PullRequestsController < ApplicationController
 
   def index
-    render json: PullRequest.all
+    if params["branch_id"]
+      render json: PullRequest.where(branch_in_id: params["branch_id"]).or(PullRequest.where(branch_out_id: params["branch_id"]))
+    else
+      render json: PullRequest.all
+    end
   end
 
   def show

@@ -9,24 +9,29 @@ class UsersController < ApplicationController
   end
 
   def create
-    user = User.create(name: params[:name])
+    user = User.create(
+      name: params[:name],
+      username: params[:username],
+      name: params[:name],
+      birthday: params[:birthday],
+      email: params[:email],
+      bio: params[:bio],
+      company: params[:company],
+      location: params[:location],
+      website: params[:website]
+    )
     render json: user, status: :created
   end
 
-
   def update
     user = User.find(params[:id])
-    params.keys.each do |key|
+    params[:attributes].keys.each do |key|
       if key != :id && user.attributes.key?(key)
-        user[key] = params[key]
+        user[key] = params[:attributes][key]
       end
     end
     user.save
     render json: user
-  end
-
-  rescue_from ActiveRecord::RecordNotFound do |e|
-    render json: { message: e.message }, status: :not_found
   end
 
   def destroy

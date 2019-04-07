@@ -1,7 +1,8 @@
 class BranchesController < ApplicationController
 
   def index
-    if params["repository_id"]
+    case
+    when params[:repository_id]
       render json: Branch.where(repository_id: params["repository_id"])
     else
       render json: Branch.all
@@ -13,15 +14,19 @@ class BranchesController < ApplicationController
   end
 
   def create
-    branch = Branch.create(name: params[:name], user_id: params[:user_id] , repository_id: params[:repository_id])
+    branch = Branch.create(
+      name: params[:name],
+      user_id: params[:user_id],
+      repository_id: params[:repository_id]
+    )
     render json: branch, status: :created
   end
 
   def update
     branch = Branch.find(params[:id])
-    params.keys.each do |key|
+    params[:attributes].keys.each do |key|
       if key != :id && branch.attributes.key?(key)
-        branch[key] = params[key]
+        branch[key] = params[:attributes][key]
       end
     end
     branch.save

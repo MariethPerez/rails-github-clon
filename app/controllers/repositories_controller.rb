@@ -1,6 +1,9 @@
 class RepositoriesController < ApplicationController
+
+
   def index
-    if params["user_id"]
+    case
+    when params[:user_id]
       render json: Repository.where(user_id: params["user_id"])
     else
       render json: Repository.all
